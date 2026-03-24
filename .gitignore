@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+*.egg-info/
+dist/
+build/
+*.spec.bak
+
+# PyInstaller
+*.manifest
+*.spec.bak
+
+# App data (don't commit user settings)
+src/data/
+*.db
+*.sqlite
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Windows
+Thumbs.db
+desktop.ini
+*.lnk
+
+# Logs
+*.log
+
+# Environment
+.env
+.envrc

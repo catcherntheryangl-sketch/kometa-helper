@@ -1,0 +1,60 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - 'v*'          # Trigger on version tags like v1.0.0
+  workflow_dispatch:  # Allow manual trigger from GitHub UI
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    name: Build Windows EXE
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build EXE with PyInstaller
+        run: |
+          pyinstaller kometa-helper.spec
+
+      - name: Rename output
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $src = "dist\KometaHelper.exe"
+          $dst = "dist\KometaHelper-$tag-Windows.exe"
+          Rename-Item -Path $src -NewName $dst
+          echo "EXE_NAME=KometaHelper-$tag-Windows.exe" >> $env:GITHUB_ENV
+        shell: pwsh
+
+      - name: Create GitHub Release and Upload EXE
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/${{ env.EXE_NAME }}
+          generate_release_notes: true
+          draft: false
+          prerelease: ${{ contains(github.ref_name, 'beta') || contains(github.ref_name, 'alpha') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifact (for manual runs)
+        uses: actions/upload-artifact@v4
+        with:
+          name: KometaHelper-Windows
+          path: dist/*.exe
+          retention-days: 30
