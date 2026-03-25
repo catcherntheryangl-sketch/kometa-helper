@@ -56,6 +56,6 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon='assets/icon.ico',  # Windows taskbar/exe icon
+    icon=none # Windows taskbar/exe icon
     version='version_info.txt',
 )
