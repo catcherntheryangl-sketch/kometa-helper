@@ -3,12 +3,13 @@ import sys
 from pathlib import Path
 
 block_cipher = None
+base_path = Path('.').resolve()
 
 a = Analysis(
     ['main.py'],
-    pathex=[str(Path('.').resolve())],
+    pathex=[str(base_path)],
     binaries=[],
-    datas=[],
+    datas=[], 
     hiddenimports=[
         'customtkinter',
         'PIL',
