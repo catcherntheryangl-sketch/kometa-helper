@@ -1,6 +1,6 @@
 import customtkinter as ctk
 import webbrowser
-from ...utils.constants import COLORS
+from src.utils.constants import COLORS
 
 class InstallPage(ctk.CTkFrame):
     def __init__(self, parent):
@@ -67,7 +67,7 @@ class InstallPage(ctk.CTkFrame):
             text_color=COLORS["text_primary"]
         ).pack(side="left")
 
-        # THE FIX: Changed text_color to a valid 6-digit hex code
+        # FIXED: Valid 6-digit hex color
         self._python_badge = ctk.CTkLabel(
             header,
             text=" Checking... ",
@@ -87,4 +87,49 @@ class InstallPage(ctk.CTkFrame):
         self._python_detail.pack(anchor="w", padx=20, pady=(0, 4))
 
         btn_row = ctk.CTkFrame(card, fg_color="transparent")
-        btn_row
+        btn_row.pack(anchor="w", padx=20, pady=(0, 16))
+
+        self.make_button(btn_row, "Check Python", self._check_python, "secondary", width=140).pack(side="left", padx=(0, 10))
+        
+        ctk.CTkButton(
+            btn_row,
+            text="Download Python 3.12",
+            command=self._open_python_download,
+            font=ctk.CTkFont("Segoe UI", 12),
+            fg_color="transparent",
+            text_color=COLORS["accent"],
+            hover_color=COLORS["bg_hover"],
+            corner_radius=8,
+            width=160,
+            height=36
+        ).pack(side="left")
+
+    def _build_git_step(self, parent, row):
+        card = self.make_card(parent)
+        card.grid(row=row, column=0, sticky="ew", pady=(0, 16))
+        
+        header = ctk.CTkFrame(card, fg_color="transparent")
+        header.pack(fill="x", padx=20, pady=(16, 8))
+        
+        ctk.CTkLabel(
+            header, 
+            text="Step 2 — Git", 
+            font=ctk.CTkFont("Segoe UI Semibold", 14),
+            text_color=COLORS["text_primary"]
+        ).pack(side="left")
+
+        self._git_badge = ctk.CTkLabel(
+            header,
+            text=" Checking... ",
+            font=ctk.CTkFont("Segoe UI Semibold", 10),
+            text_color=COLORS["accent_yellow"],
+            fg_color=COLORS["accent_yellow"] + "22",
+            corner_radius=4,
+        )
+        self._git_badge.pack(side="right")
+
+    def _check_python(self):
+        pass
+
+    def _open_python_download(self):
+        webbrowser.open("https://www.python.org/downloads/")
