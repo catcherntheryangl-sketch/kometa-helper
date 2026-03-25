@@ -1,16 +1,13 @@
-"""
-Kometa Helper - Windows GUI for Kometa (Plex Metadata Manager)
-Entry point
-"""
-
 import sys
-import os
-
-# Ensure the src directory is on the path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
-
+import multiprocessing
 from src.app import KometaHelperApp
 
-if __name__ == "__main__":
+def main():
+    """Main entry point for the application."""
     app = KometaHelperApp()
-    app.run()
+    sys.exit(app.run())
+
+if __name__ == "__main__":
+    # CRITICAL: Prevents the EXE from crashing/looping on Windows
+    multiprocessing.freeze_support()
+    main()
