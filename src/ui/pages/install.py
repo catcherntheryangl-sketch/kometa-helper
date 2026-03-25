@@ -67,7 +67,7 @@ class InstallPage(ctk.CTkFrame):
             text_color=COLORS["text_primary"]
         ).pack(side="left")
 
-        # FIXED: Valid 6-digit hex color
+        # Fixed text_color
         self._python_badge = ctk.CTkLabel(
             header,
             text=" Checking... ",
