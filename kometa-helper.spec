@@ -7,7 +7,7 @@ base_path = Path('.').resolve()
 
 a = Analysis(
     ['main.py'],
-    pathex=[str(base_path)],
+    pathex=[str(base_path)], # This ensures PyInstaller looks in the root for 'src'
     binaries=[],
     datas=[], 
     hiddenimports=[
@@ -51,5 +51,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=None,
+    icon=None, # Fixed: Must be capital 'None'
 )
